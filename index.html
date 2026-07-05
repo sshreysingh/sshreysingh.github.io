@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrey Singh Parihar — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1929;
+    --panel:#0F2438;
+    --panel-2:#122B45;
+    --grid:#1C3A57;
+    --line:#2A4A6B;
+    --paper:#E7EEF4;
+    --slate:#7C93AC;
+    --amber:#E8A33D;
+    --amber-dim:#8a642a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* corner registration marks */
+  .reg-mark{
+    position:fixed; width:28px; height:28px; z-index:50; pointer-events:none;
+    opacity:.55;
+  }
+  .reg-mark::before, .reg-mark::after{content:''; position:absolute; background:var(--amber);}
+  .reg-mark::before{width:100%; height:1px; top:50%;}
+  .reg-mark::after{height:100%; width:1px; left:50%;}
+  .reg-tl{top:16px; left:16px;}
+  .reg-tr{top:16px; right:16px;}
+  .reg-bl{bottom:64px; left:16px;}
+  .reg-br{bottom:64px; right:16px;}
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 56px;
+    background:rgba(10,25,41,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header .brand{font-family:'JetBrains Mono',monospace; font-weight:700; letter-spacing:1px; font-size:14px;}
+  header .brand span{color:var(--amber);}
+  nav a{
+    color:var(--slate); text-decoration:none; font-family:'JetBrains Mono',monospace;
+    font-size:12px; letter-spacing:1px; margin-left:32px; transition:color .2s;
+  }
+  nav a:hover{color:var(--amber);}
+
+  section{
+    max-width:1040px; margin:0 auto; padding:160px 40px 100px;
+    position:relative;
+  }
+  .sheet-label{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--amber);
+    letter-spacing:3px; margin-bottom:18px; display:flex; align-items:center; gap:14px;
+  }
+  .sheet-label::after{content:''; flex:1; height:1px; background:var(--line);}
+
+  /* HERO */
+  #hero{padding-top:190px; min-height:92vh; display:flex; flex-direction:column; justify-content:center;}
+  .hero-eyebrow{
+    font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px;
+    letter-spacing:3px; margin-bottom:22px; opacity:0; animation:fadeUp .7s .1s forwards;
+  }
+  h1.title{
+    font-family:'JetBrains Mono',monospace; font-weight:800; letter-spacing:-1px;
+    font-size:clamp(42px, 7vw, 84px); line-height:1.02; color:var(--paper);
+    opacity:0; animation:fadeUp .8s .25s forwards;
+  }
+  h1.title .accent{color:var(--amber);}
+  .hero-role{
+    font-size:19px; color:var(--slate); margin-top:22px; max-width:560px; line-height:1.6;
+    opacity:0; animation:fadeUp .8s .45s forwards;
+  }
+  .hero-cta{margin-top:40px; display:flex; gap:18px; opacity:0; animation:fadeUp .8s .6s forwards;}
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:1px;
+    padding:14px 26px; border:1px solid var(--amber); color:var(--amber);
+    text-decoration:none; transition:all .25s; display:inline-block;
+  }
+  .btn:hover{background:var(--amber); color:var(--bg);}
+  .btn.ghost{border-color:var(--line); color:var(--slate);}
+  .btn.ghost:hover{border-color:var(--slate); background:transparent; color:var(--paper);}
+
+  @keyframes fadeUp{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);}}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:56px; align-items:start;}
+  .about-text{font-size:16px; line-height:1.85; color:#C7D4E0;}
+  .specs{
+    border:1px solid var(--line); background:var(--panel);
+  }
+  .specs .row{display:flex; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--line); font-size:13px;}
+  .specs .row:last-child{border-bottom:none;}
+  .specs .row span:first-child{font-family:'JetBrains Mono',monospace; color:var(--slate); letter-spacing:1px;}
+  .specs .row span:last-child{color:var(--paper); text-align:right;}
+  .specs .head{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:2px;
+    background:var(--panel-2); padding:12px 20px; color:var(--amber); border-bottom:1px solid var(--line);
+  }
+
+  /* PROJECTS */
+  .project-card{
+    border:1px solid var(--line); background:var(--panel);
+    margin-bottom:28px; position:relative; overflow:hidden;
+  }
+  .project-card:hover{border-color:var(--amber-dim);}
+  .project-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:26px 28px 0;
+  }
+  .project-num{font-family:'JetBrains Mono',monospace; color:var(--slate); font-size:12px; letter-spacing:2px;}
+  .project-name{font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; margin:10px 0 12px; color:var(--paper);}
+  .project-desc{color:#B9C7D6; font-size:14.5px; line-height:1.7; padding:0 28px; max-width:640px;}
+  .project-tags{display:flex; flex-wrap:wrap; gap:8px; padding:20px 28px 0;}
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.5px;
+    color:var(--slate); border:1px solid var(--line); padding:5px 10px;
+  }
+  .project-foot{
+    display:flex; justify-content:flex-end; padding:22px 28px 26px; border-top:1px solid var(--line); margin-top:22px;
+  }
+  .project-foot a{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--amber); text-decoration:none; letter-spacing:1px;
+  }
+  .project-foot a:hover{text-decoration:underline;}
+
+  /* SKILLS */
+  .skills-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--line); border:1px solid var(--line);}
+  .skill-cat{background:var(--panel); padding:26px 30px;}
+  .skill-cat h4{font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:12px; letter-spacing:2px; margin-bottom:16px;}
+  .skill-cat ul{list-style:none;}
+  .skill-cat li{color:#C7D4E0; font-size:14.5px; padding:6px 0; display:flex; align-items:center; gap:10px;}
+  .skill-cat li::before{content:''; width:6px; height:6px; background:var(--amber); flex-shrink:0;}
+
+  /* CONTACT */
+  #contact{text-align:center; padding-bottom:180px;}
+  #contact h2{font-family:'JetBrains Mono',monospace; font-size:clamp(30px,5vw,52px); margin-bottom:20px;}
+  #contact p{color:var(--slate); max-width:480px; margin:0 auto 40px; line-height:1.7;}
+  .contact-links{display:flex; gap:20px; justify-content:center; flex-wrap:wrap;}
+
+  /* TITLE BLOCK FOOTER */
+  .titleblock{
+    position:fixed; bottom:0; left:0; right:0; z-index:40;
+    background:var(--panel-2); border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 40px; font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:1px; color:var(--slate);
+  }
+  .titleblock .sheet-current{color:var(--amber);}
+  .titleblock .divider{color:var(--line); margin:0 14px;}
+
+  h2.section-title{
+    font-family:'JetBrains Mono',monospace; font-size:clamp(28px,4vw,42px); margin-bottom:36px; color:var(--paper);
+  }
+
+  @media(max-width:760px){
+    header{padding:16px 20px;}
+    nav a{margin-left:16px; font-size:11px;}
+    section{padding:130px 22px 70px;}
+    .about-grid{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr;}
+    .titleblock{padding:12px 20px; font-size:10px;}
+    .reg-mark{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="reg-mark reg-tl"></div>
+<div class="reg-mark reg-tr"></div>
+<div class="reg-mark reg-bl"></div>
+<div class="reg-mark reg-br"></div>
+
+<header>
+  <div class="brand">SSP<span>.</span>DEV</div>
+  <nav>
+    <a href="#about">ABOUT</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+</header>
+
+<section id="hero">
+  <div class="hero-eyebrow mono">SHEET 01 / 05 — TITLE</div>
+  <h1 class="title">SHREY SINGH<br>PARIHAR<span class="accent">.</span></h1>
+  <p class="hero-role">Computer Science student at UPES, Jodhpur — I build things across the stack: ML-driven diagnostic tools, desktop systems for real operations, and Android apps people actually use.</p>
+  <div class="hero-cta">
+    <a class="btn" href="#projects">VIEW PROJECTS →</a>
+    <a class="btn ghost" href="https://github.com/sshreysingh" target="_blank" rel="noopener">GITHUB ↗</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="sheet-label mono">SHEET 02 / 05 — ABOUT</div>
+  <h2 class="section-title reveal">About</h2>
+  <div class="about-grid">
+    <p class="about-text reveal">
+      I'm a Computer Science student who likes finishing things — not just prototypes.
+      My projects span a speech-based ML screening tool for Alzheimer's indicators, a full
+      Java desktop system for managing a furniture production line, and a couple of
+      Android apps for everyday tracking. I'm drawn to problems where software
+      meets a real process: healthcare, operations, personal data.
+      Currently looking for internship and entry-level opportunities where I can build things that ship.
+    </p>
+    <div class="specs reveal">
+      <div class="head">SPECIFICATIONS</div>
+      <div class="row"><span>INSTITUTION</span><span>UPES, Jodhpur</span></div>
+      <div class="row"><span>PROGRAM</span><span>B.Tech CS</span></div>
+      <div class="row"><span>LOCATION</span><span>Jodhpur, Rajasthan, IN</span></div>
+      <div class="row"><span>FOCUS</span><span>Full-stack / ML</span></div>
+      <div class="row"><span>STATUS</span><span>Open to internships</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sheet-label mono">SHEET 03 / 05 — PROJECTS</div>
+  <h2 class="section-title reveal">Selected Work</h2>
+
+  <div class="project-card reveal">
+    <div class="project-top">
+      <div>
+        <div class="project-num">PRJ—01 / ML + HEALTH</div>
+        <div class="project-name">Alzheimer's Progression Tracking via Discourse</div>
+      </div>
+    </div>
+    <p class="project-desc">A Flask web app that transcribes speech with Whisper, then screens for Alzheimer's indicators using a machine-learning model trained on 18 linguistic features — filler rate, vocabulary richness, repetition, information units, and more.</p>
+    <div class="project-tags">
+      <span class="tag">PYTHON</span><span class="tag">FLASK</span><span class="tag">WHISPER</span><span class="tag">SCIKIT-LEARN</span>
+    </div>
+    <div class="project-foot"><a href="https://github.com/sshreysingh/Alzheimer-s-Progression-Tracking-via-Discourse" target="_blank" rel="noopener">VIEW SOURCE →</a></div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-top">
+      <div>
+        <div class="project-num">PRJ—02 / DESKTOP SYSTEM</div>
+        <div class="project-name">Furniture Manufacturing System</div>
+      </div>
+    </div>
+    <p class="project-desc">A Java desktop application that streamlines operations in a furniture production environment — managing orders, raw materials, production processes, and shipping, with role-based access for different stakeholders.</p>
+    <div class="project-tags">
+      <span class="tag">JAVA</span><span class="tag">MAVEN</span><span class="tag">RBAC</span>
+    </div>
+    <div class="project-foot"><a href="https://github.com/sshreysingh/Furniture_manufacturing_systemm" target="_blank" rel="noopener">VIEW SOURCE →</a></div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-top">
+      <div>
+        <div class="project-num">PRJ—03 / ANDROID</div>
+        <div class="project-name">Diabetes Prediction System</div>
+      </div>
+    </div>
+    <p class="project-desc">An Android app that estimates diabetes risk from user-entered health metrics, built to make a predictive model usable in a simple mobile interface.</p>
+    <div class="project-tags">
+      <span class="tag">KOTLIN</span><span class="tag">ANDROID SDK</span>
+    </div>
+    <div class="project-foot"><a href="https://github.com/sshreysingh/DiabetesPridectionSystem" target="_blank" rel="noopener">VIEW SOURCE →</a></div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-top">
+      <div>
+        <div class="project-num">PRJ—04 / ANDROID</div>
+        <div class="project-name">Expense Tracker Android</div>
+      </div>
+    </div>
+    <p class="project-desc">A Kotlin Android app for logging and tracking personal expenses day to day.</p>
+    <div class="project-tags">
+      <span class="tag">KOTLIN</span><span class="tag">ANDROID SDK</span>
+    </div>
+    <div class="project-foot"><a href="https://github.com/sshreysingh/ExpenseTrackerAndroid" target="_blank" rel="noopener">VIEW SOURCE →</a></div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="project-top">
+      <div>
+        <div class="project-num">PRJ—05 / UTILITY</div>
+        <div class="project-name">The Weather App</div>
+      </div>
+    </div>
+    <p class="project-desc">A straightforward Python weather-lookup application.</p>
+    <div class="project-tags">
+      <span class="tag">PYTHON</span>
+    </div>
+    <div class="project-foot"><a href="https://github.com/sshreysingh/Theweatherapp" target="_blank" rel="noopener">VIEW SOURCE →</a></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sheet-label mono">SHEET 04 / 05 — SKILLS</div>
+  <h2 class="section-title reveal">Toolkit</h2>
+  <div class="skills-grid reveal">
+    <div class="skill-cat">
+      <h4>LANGUAGES</h4>
+      <ul><li>Python</li><li>Java</li><li>Kotlin</li></ul>
+    </div>
+    <div class="skill-cat">
+      <h4>ML / DATA</h4>
+      <ul><li>scikit-learn</li><li>Whisper (speech-to-text)</li><li>Flask</li></ul>
+    </div>
+    <div class="skill-cat">
+      <h4>MOBILE</h4>
+      <ul><li>Android SDK</li><li>Kotlin</li></ul>
+    </div>
+    <div class="skill-cat">
+      <h4>TOOLS</h4>
+      <ul><li>Git & GitHub</li><li>Maven</li><li>Jupyter Notebook</li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="sheet-label mono">SHEET 05 / 05 — CONTACT</div>
+  <h2 class="reveal">Let's build something.</h2>
+  <p class="reveal">Open to internship and entry-level software roles. Reach out on LinkedIn or check out the code on GitHub.</p>
+  <div class="contact-links reveal">
+    <a class="btn" href="https://www.linkedin.com/in/shreysinghh/" target="_blank" rel="noopener">LINKEDIN ↗</a>
+    <a class="btn ghost" href="https://github.com/sshreysingh" target="_blank" rel="noopener">GITHUB ↗</a>
+  </div>
+</section>
+
+<div class="titleblock">
+  <div>SHREY SINGH PARIHAR <span class="divider">|</span> PORTFOLIO SET</div>
+  <div>SHEET <span class="sheet-current" id="sheet-num">01</span> / 05</div>
+</div>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // title block sheet number tracks section in view
+  const sections = ['hero','about','projects','skills','contact'];
+  const sheetNum = document.getElementById('sheet-num');
+  const secIo = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx = sections.indexOf(entry.target.id) + 1;
+        sheetNum.textContent = String(idx).padStart(2,'0');
+      }
+    });
+  }, {threshold:0.5});
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) secIo.observe(el);
+  });
+</script>
+
+</body>
+</html>
